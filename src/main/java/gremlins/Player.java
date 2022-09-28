@@ -1,115 +1,36 @@
 package gremlins;
 
-import java.util.*;
-
-public class Player {
-    private int x;
-    private int y;
-    private int movement;
-    private int speed = 2;
-
-    private int shooting;
-    private int stopMove;
-
-    public List<Fireball> fireballs = new ArrayList<Fireball>();
+public class Player extends Being{
 
     // Can return these 3 to use when drawing
-    public Player(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.movement = 2;
-        this.shooting = 0;
-        this.stopMove = 0;
+    public Player(int x, int y, int dir, App app) {
+        super(x, y, dir);
+        this.speed = 2;
+        this.sprite = app.wizard2;
     }
 
-    public void up() {
-        this.y -= speed;
-    }
-    public void left() {
-        this.x -= speed;
-    }
-    public void right() {
-        this.x += speed;
-    }
-    public void down() {
-        this.y += speed;
-    }
-
-    public void move(App app) {
-        if (this.stopMove == 1) {
-            stopMovement();
-        } else if (this.movement == 2) {
-            if (app.tileAt(this.x, this.y-2) == ' ') {
-                up();
-            }
-        } else if (this.movement == 0) {
-            if (app.tileAt(this.x-2, this.y) == ' ') {
-                left();
-            }
-        } else if (this.movement == 1) {
-            if (app.tileAt(this.x+20, this.y) == ' ') {
-                right();
-            }
-        } else if (this.movement == 3) {
-            if (app.tileAt(this.x, this.y+20) == ' ') {
-                down();
-            }
-        }
-    }
-
-
-    public void shoot(int cooldown) {
-        if (this.shooting == 0) {
-            this.shooting = 1;
-            fireballs.add(new Fireball(this.x, this.y, this.movement));
-            try {
-                Thread.sleep(cooldown);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            this.shooting = 0;
-        }
-    }
-
-    public void setMovement(int dir) {
+    public void setMovement(int dir, App app) {
         if ((this.x % 20 == 0) && (this.y % 20 == 0)) {
-            this.movement = dir;
+            this.dir = dir;
+            if (dir == 0) {
+                this.sprite = app.wizard0;
+            } else if (dir == 1) {
+                this.sprite = app.wizard1;
+            } else if (dir == 2) {
+                this.sprite = app.wizard2;
+            } else if (dir == 3) {
+                this.sprite = app.wizard3;
+            }
             this.stopMove = 0;
         }
     }
+    
 
-
-    public void stopMove() {
-        this.stopMove = 1;
-    }
-
-    public void stopMovement() {
-        if ((this.x % 20 != 0) || (this.y % 20 != 0)) {
-            if (this.movement == 0) {
-                left();
-            } else if (this.movement == 1) {
-                right();
-            } else if (this.movement == 2) {
-                up();
-            } else {
-                down();
-            }
-        }
-    }
-
-    public int getX() {
-        return this.x;
-    }
-    public int getY() {
-        return this.y;
-    }
-
-    public void draw(App app) {
-        for (Fireball f: fireballs) {
-            f.move();
-            f.draw(app);
-        }
-        app.image(app.wizard2, this.x, this.y);
+    public void progressBar(App app) {
+        app.rect(600,678,100,12);
+        float len = 96*((float) this.lastShot/(app.fireballCooldown*60));
+        app.fill(0);
+        app.rect(602,680,len,8);
+        app.fill(255);
     }
 }

@@ -2,82 +2,58 @@ package gremlins;
 
 import java.util.*;
 
-public class Gremlin {
-    private int x;
-    private int y;
-    private int movement;
-    private int shooting;
-    private List<Slime> slimes = new ArrayList<Slime>();
+public class Gremlin extends Being{
     Random gen = new Random();
 
-    public Gremlin(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.shooting = 0;
+    public Gremlin(int x, int y, int dir, App app) {
+        super(x, y, dir);
+        this.dir = gen.nextInt(4);
+        this.speed = 1;
+        this.sprite = app.gremlin;
+    }
+
+    public void changer(App app, int tempMove){
+        int checker = 0;
+        if (app.tileAt(this.x, this.y-speed) != ' ') {
+            checker += 1;
+        } else if (app.tileAt(this.x-speed, this.y) != ' ') {
+            checker += 1;
+        } else if (app.tileAt(this.x+20, this.y) != ' ') {
+            checker += 1;
+        } else if (app.tileAt(this.x, this.y+20) != ' ') {
+            checker += 1;
+        }
+
+        if (checker == 3) {
+            this.dir = tempMove;
+        } else {
+            this.dir = gen.nextInt(4);
+            while (tempMove == this.dir) {
+                this.dir = gen.nextInt(4);
+            }
+        }  
     }
 
     // New direction
-    public void direction() {
-        this.movement = gen.nextInt(4);
+    public void direction(App app) {
+        int tempMove = 0;
+        if (this.dir % 2 == 0) {
+            tempMove = this.dir + 1;
+        } else {
+            tempMove = this.dir - 1;
+        }
+
+        changer(app, tempMove); 
     }
+
+    public void respawn(App app) {
+
+    }
+
     // Automated movement function
-    public void move(App app) {
-        Boolean flag = true;
-        while (flag == true) {
-            if (this.movement == 0) {
-                if (app.tileAt(this.x, this.y-1) == ' ') {
-                    this.y -= 1;
-                    flag = false;
-                } else {
-                    flag = true;
-                }
-            } else if (this.movement == 1) {
-                if (app.tileAt(this.x-1, this.y) == ' ') {
-                    this.x -= 1;
-                    flag = false;
-                } else {
-                    flag = true;
-                }
-            } else if (this.movement == 2) {
-                if (app.tileAt(this.x+20, this.y) == ' ') {
-                    this.x += 1;
-                    flag = false;
-                } else {
-                    flag = true;
-                }
-            } else if (this.movement == 3) {
-                if (app.tileAt(this.x, this.y+20) == ' ') {
-                    this.y += 1;
-                    flag = false;
-                } else {
-                    flag = true;
-                }
-            }
-            if (flag == true) {
-                direction();
-            }
+    public void turn(App app) {
+        while (move(app) == false) {
+            direction(app);
         }
-    }
-
-    public void shoot(int cooldown) {
-        if (this.shooting == 0) {
-            this.shooting = 1;
-            slimes.add(new Slime(this.x, this.y, this.movement));
-            try {
-                Thread.sleep(cooldown);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            this.shooting = 0;
-        }
-    }
-
-    public void draw(App app) {
-        for (Slime s: slimes) {
-            s.move();
-            s.draw(app);
-        }
-        app.image(app.gremlin, this.x, this.y);
     }
 }
