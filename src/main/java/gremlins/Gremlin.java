@@ -4,31 +4,37 @@ import java.util.*;
 
 public class Gremlin extends Being{
     Random gen = new Random();
+    private int tempMove;
 
     public Gremlin(int x, int y, int dir, App app) {
         super(x, y, dir);
         this.dir = gen.nextInt(4);
         this.speed = 1;
         this.sprite = app.gremlin;
+        this.tempMove = 0;
     }
 
-    public void changer(App app, int tempMove){
+    public void changer(App app){
         int checker = 0;
         if (app.tileAt(this.x, this.y-speed) != ' ') {
             checker += 1;
-        } else if (app.tileAt(this.x-speed, this.y) != ' ') {
+        } 
+        if (app.tileAt(this.x-speed, this.y) != ' ') {
             checker += 1;
-        } else if (app.tileAt(this.x+20, this.y) != ' ') {
+        } 
+        if (app.tileAt(this.x+20, this.y) != ' ') {
             checker += 1;
-        } else if (app.tileAt(this.x, this.y+20) != ' ') {
+        } 
+        if (app.tileAt(this.x, this.y+20) != ' ') {
             checker += 1;
         }
 
+
         if (checker == 3) {
-            this.dir = tempMove;
+            this.dir = this.tempMove;
         } else {
             this.dir = gen.nextInt(4);
-            while (tempMove == this.dir) {
+            while (this.tempMove == this.dir) {
                 this.dir = gen.nextInt(4);
             }
         }  
@@ -36,14 +42,11 @@ public class Gremlin extends Being{
 
     // New direction
     public void direction(App app) {
-        int tempMove = 0;
         if (this.dir % 2 == 0) {
-            tempMove = this.dir + 1;
+            this.tempMove = this.dir + 1;
         } else {
-            tempMove = this.dir - 1;
+            this.tempMove = this.dir - 1;
         }
-
-        changer(app, tempMove); 
     }
 
     public void respawn(App app) {
@@ -52,8 +55,11 @@ public class Gremlin extends Being{
 
     // Automated movement function
     public void turn(App app) {
-        while (move(app) == false) {
+        if (move(app) == false) {
             direction(app);
+            while (move(app) == false) {
+                changer(app);
+            }
         }
     }
 }

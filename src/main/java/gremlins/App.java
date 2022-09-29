@@ -37,6 +37,11 @@ public class App extends PApplet {
     public PImage wizard2;
     public PImage wizard3;
     public PImage exit;
+    public PImage brickwall0;
+    public PImage brickwall1;
+    public PImage brickwall2;
+    public PImage brickwall3;
+    
 
     public int lives;
     public JSONArray levels;
@@ -47,12 +52,14 @@ public class App extends PApplet {
 
     public Player player;
     public Gremlin Gremlin;
-    public List<Gremlin> gremlins = new ArrayList<Gremlin>();
+    public List<Gremlin> gremlins;
     public float fireballCooldown;
     public float slimeCooldown;
 
-    public List<Fireball> fireballs = new ArrayList<Fireball>();
-    public List<Slime> slimes = new ArrayList<Slime>();
+    public List<Fireball> fireballs;
+    public List<Slime> slimes;
+    public List<brickTile> broken;
+    public exitTile exitTile;
 
     public App() {
         this.configPath = "config.json";
@@ -82,7 +89,11 @@ public class App extends PApplet {
         this.wizard2 = loadImage(this.getClass().getResource("wizard2.png").getPath().replace("%20", " "));
         this.wizard3 = loadImage(this.getClass().getResource("wizard3.png").getPath().replace("%20", " "));
         this.exit = loadImage(this.getClass().getResource("exit.png").getPath().replace("%20", " "));
-        
+        this.brickwall0 = loadImage(this.getClass().getResource("brickwall_destroyed0.png").getPath().replace("%20", " "));
+        this.brickwall1 = loadImage(this.getClass().getResource("brickwall_destroyed1.png").getPath().replace("%20", " "));
+        this.brickwall2 = loadImage(this.getClass().getResource("brickwall_destroyed2.png").getPath().replace("%20", " "));
+        this.brickwall3 = loadImage(this.getClass().getResource("brickwall_destroyed3.png").getPath().replace("%20", " "));
+
         JSONObject conf = loadJSONObject(new File(this.configPath));
         this.lives = conf.getInt("lives");
         this.levels = conf.getJSONArray("levels");
@@ -110,6 +121,18 @@ public class App extends PApplet {
                 fireballs.add(new Fireball(player.getX(), player.getY(), player.getDir(), this));
                 player.shot();
             }
+        } else if (key == 'r' || key == 'R') {
+            if (this.lives == 0) {
+                JSONObject conf = loadJSONObject(new File(this.configPath));
+                lives = conf.getInt("lives");
+                this.level = 0;
+                this.tempLevel = -1;
+            } else {
+                this.lives -= 1;
+                this.tempLevel -= 1;
+            }
+        } else if (key == 'q' || key == 'Q') {
+            exit();
         }
     }
     
@@ -126,7 +149,12 @@ public class App extends PApplet {
      * Resetting map layout
      */
     public void resetMap(){
-        this.currentLevel = this.levels.getJSONObject(level);
+        fireballs = new ArrayList<Fireball>();
+        slimes = new ArrayList<Slime>();
+        gremlins = new ArrayList<Gremlin>();
+        broken = new ArrayList<brickTile>();
+
+        this.currentLevel = this.levels.getJSONObject(this.level);
         this.fireballCooldown = this.currentLevel.getFloat("wizard_cooldown");
         this.slimeCooldown = this.currentLevel.getFloat("enemy_cooldown");
         String layoutName = this.currentLevel.getString("layout");
@@ -138,7 +166,6 @@ public class App extends PApplet {
                 listOfStrings.add(str);
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         this.layout = listOfStrings.toArray(new String[listOfStrings.size()]);
@@ -159,6 +186,12 @@ public class App extends PApplet {
                     StringBuilder tempString = new StringBuilder(this.layout[y/20]);
                     tempString.setCharAt(x/20, ' ');
                     this.layout[y/20] = tempString.toString();
+                } else if (eachString.charAt(i) == 'E') {
+                    exitTile = new exitTile(x, y, 0, this);
+
+                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);
+                    tempString.setCharAt(x/20, ' ');
+                    this.layout[y/20] = tempString.toString();
                 }
                 x = x+20;
             }
@@ -167,70 +200,106 @@ public class App extends PApplet {
     }
 
     /**
+     * Make my life easier
+     */
+    public int grid(int x) {
+        return (Math.floorDiv(x, 20));
+    }
+
+    /**
      * Get the block that is at the place
      */
     public char tileAt(int x, int y) {
-        return this.layout[Math.floorDiv(y,20)].charAt(Math.floorDiv(x,20));
+        return this.layout[grid(y)].charAt(grid(x));
+    }
+
+    /**
+     * Check for collisions
+     */
+    public void collisions() {
+        // Do all the movements
+        player.move(this);
+        for (Fireball f : fireballs) {
+            f.move();
+        }
+        for (Gremlin g : gremlins) {
+            // Lagging code too much so commented for now.
+            g.turn(this);
+            if (g.shoot(this.slimeCooldown) == true) {
+                slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));
+                g.shot();
+            }
+        }
+        for (Slime s : slimes) {
+            s.move();
+        }
+
+        // Check for collisions
+        if (exitTile.onTile(player, this)) {
+            this.level += 1;
+        }
     }
 
     /**
      * Draw all elements in the game by current frame. 
 	 */
     public void draw() {
-        // If die: Could just lower tempLevel by 1.
+        // If die: Could lower tempLevel by 1.
         background(182, 146, 109);
         // If level finished: Parse base of next level
         // If level not finished: Reparse unbreakable objects everything else have to get from somewhere else.
-        if (level<this.levels.size()) {
-            if (tempLevel != level) {
-                resetMap();
-                tempLevel = tempLevel + 1;
-            }
+        if (lives == 0) {
+            this.text("Game over", 300, 300);
+            this.text("Q: Quit, R: Retry", 300, 350);
+        } else {
+            if (level<this.levels.size()) {
+                if (tempLevel != -1) {
+                    collisions();
+                }
+                if (this.tempLevel != level) {
+                    resetMap();
+                    this.tempLevel = this.tempLevel + 1;
+                }
 
-            int y = 0;
-            for (String eachString : this.layout) {
-                int x = 0;
-                for (int i = 0; i < eachString.length(); i++) {
-                    if (eachString.charAt(i) == 'X') {
-                        this.image(this.stonewall, x, y);
-                    } else if (eachString.charAt(i) == 'B') {
-                        this.image(this.brickwall, x, y);
-                    } else if (eachString.charAt(i) == 'E') {
-                        this.image(this.exit, x, y);
+                int y = 0;
+                for (String eachString : this.layout) {
+                    int x = 0;
+                    for (int i = 0; i < eachString.length(); i++) {
+                        if (eachString.charAt(i) == 'X') {
+                            this.image(this.stonewall, x, y);
+                        } else if (eachString.charAt(i) == 'B') {
+                            this.image(this.brickwall, x, y);
+                        }
+                        x = x+20;
                     }
-                    x = x+20;
+                    y = y+20;
                 }
-                y = y+20;
-            }
 
-            player.move(this);
-            player.draw(this);
-            if (player.shoot(this.fireballCooldown) == false) {
-                player.progressBar(this);
-            }
-            for (Fireball f : fireballs) {
-                f.move();
-                f.draw(this);
-            }
-            for (Gremlin g : gremlins) {
-                // Lagging code too much so commented for now.
-                g.turn(this);
-                if (g.shoot(this.slimeCooldown) == true) {
-                    slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));
-                    g.shot();
+                exitTile.draw(this);
+                player.draw(this);
+                if (player.shoot(this.fireballCooldown) == false) {
+                    player.progressBar(this);
                 }
-                g.draw(this);
+                for (Fireball f : fireballs) {
+                    f.draw(this);
+                }
+                for (Gremlin g : gremlins) {
+                    g.draw(this);
+                }
+                for (Slime s : slimes) {
+                    s.draw(this);
+                }
+                this.text("Lives: ", 20, 690);
+                for (int i = 0; i < lives; i++) {
+                    int x = (3+i)*20;
+                    this.image(wizard2, x, 675);
+                }
+                this.text("Level " + (level+1) + "/" + (this.levels.size()), 170, 690);
+                this.text("Q: Quit, R: Respawn", 400, 690);
+            } else {
+                this.text("You win", 300, 300);
+                this.text("Q: Quit, R: Retry", 300, 350);
             }
-            for (Slime s : slimes) {
-                s.move();
-                s.draw(this);
-            }
-            this.text("Lives: ", 20, 690);
-            for (int i = 0; i < lives; i++) {
-                int x = (3+i)*20;
-                this.image(wizard2, x, 675);
-            }
-            this.text("Level " + (level+1) + "/" + (this.levels.size()), 170, 690);
         }
     }
 
