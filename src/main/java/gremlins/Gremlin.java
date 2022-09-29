@@ -1,6 +1,7 @@
 package gremlins;
 
 import java.util.*;
+import java.awt.geom.Point2D;
 
 public class Gremlin extends Being{
     Random gen = new Random();
@@ -47,10 +48,18 @@ public class Gremlin extends Being{
         } else {
             this.tempMove = this.dir - 1;
         }
+        changer(app);
     }
 
-    public void respawn(App app) {
-
+    public void respawn(App app, Player player) {
+        this.x = gen.nextInt(35)*20;
+        this.y = gen.nextInt(32)*20;
+        direction(app);
+        while ((app.tileAt(this.x, this.y) != ' ') || (Point2D.distance(this.x, this.y, player.getX(), player.getY()) < 10)) {
+            this.x = gen.nextInt(35)*20;
+            this.y = gen.nextInt(32)*20;
+            changer(app);
+        }
     }
 
     // Automated movement function

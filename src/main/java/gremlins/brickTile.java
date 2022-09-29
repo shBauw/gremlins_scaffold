@@ -22,8 +22,6 @@ public class brickTile extends Generic{
     }
 
     public void draw(App app) {
-        if (change(app) == true) {
-            app.image(this.sprite, this.x, this.y);
-        }
+        app.image(this.sprite, this.x, this.y);
     }
 }

@@ -41,6 +41,7 @@ public class App extends PApplet {
     public PImage brickwall1;
     public PImage brickwall2;
     public PImage brickwall3;
+    public PImage freeze;
     
 
     public int lives;
@@ -48,6 +49,7 @@ public class App extends PApplet {
     public JSONObject currentLevel;
     public int level;
     public int tempLevel;
+    public int won;
     public String[] layout;
 
     public Player player;
@@ -60,6 +62,8 @@ public class App extends PApplet {
     public List<Slime> slimes;
     public List<brickTile> broken;
     public exitTile exitTile;
+    public freezeTile freezeTile;
+    public int freezing;
 
     public App() {
         this.configPath = "config.json";
@@ -93,6 +97,7 @@ public class App extends PApplet {
         this.brickwall1 = loadImage(this.getClass().getResource("brickwall_destroyed1.png").getPath().replace("%20", " "));
         this.brickwall2 = loadImage(this.getClass().getResource("brickwall_destroyed2.png").getPath().replace("%20", " "));
         this.brickwall3 = loadImage(this.getClass().getResource("brickwall_destroyed3.png").getPath().replace("%20", " "));
+        this.freeze = loadImage(this.getClass().getResource("freeze.png").getPath().replace("%20", " "));
 
         JSONObject conf = loadJSONObject(new File(this.configPath));
         this.lives = conf.getInt("lives");
@@ -122,11 +127,12 @@ public class App extends PApplet {
                 player.shot();
             }
         } else if (key == 'r' || key == 'R') {
-            if (this.lives == 0) {
+            if (this.lives == 0 || this.won == 1) {
                 JSONObject conf = loadJSONObject(new File(this.configPath));
                 lives = conf.getInt("lives");
                 this.level = 0;
                 this.tempLevel = -1;
+                this.won = 0;
             } else {
                 this.lives -= 1;
                 this.tempLevel -= 1;
@@ -153,6 +159,8 @@ public class App extends PApplet {
         slimes = new ArrayList<Slime>();
         gremlins = new ArrayList<Gremlin>();
         broken = new ArrayList<brickTile>();
+
+        this.freezing = 0;
 
         this.currentLevel = this.levels.getJSONObject(this.level);
         this.fireballCooldown = this.currentLevel.getFloat("wizard_cooldown");
@@ -192,6 +200,12 @@ public class App extends PApplet {
                     StringBuilder tempString = new StringBuilder(this.layout[y/20]);
                     tempString.setCharAt(x/20, ' ');
                     this.layout[y/20] = tempString.toString();
+                } else if (eachString.charAt(i) == 'F') {
+                    freezeTile = new freezeTile(x, y, 0, this);
+
+                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);
+                    tempString.setCharAt(x/20, ' ');
+                    this.layout[y/20] = tempString.toString();
                 }
                 x = x+20;
             }
@@ -203,7 +217,7 @@ public class App extends PApplet {
      * Make my life easier
      */
     public int grid(int x) {
-        return (Math.floorDiv(x, 20));
+        return (Math.round(x/20));
     }
 
     /**
@@ -217,17 +231,49 @@ public class App extends PApplet {
      * Check for collisions
      */
     public void collisions() {
+
+        //Check for player on tiles
+
+        if (exitTile.onTile(player, this)) {
+            if (this.level + 1 == this.levels.size()) {
+                this.won = 1;
+            } else {
+                this.level += 1;
+            }
+        } else if (freezeTile.onTile(player, this)) {
+            this.freezing += 1;
+        }
+
         // Do all the movements
         player.move(this);
         for (Fireball f : fireballs) {
             f.move();
         }
+
         for (Gremlin g : gremlins) {
-            // Lagging code too much so commented for now.
-            g.turn(this);
-            if (g.shoot(this.slimeCooldown) == true) {
-                slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));
-                g.shot();
+            if (this.freezing == 0) {
+                g.turn(this);
+                if (g.shoot(this.slimeCooldown) == true) {
+                    slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));
+                    g.shot();
+                }
+            }
+
+            if ((grid(player.getX()) == grid(g.getX())) && (grid(player.getY()) == grid(g.getY()))) {
+                this.lives -= 1;
+                this.tempLevel -= 1;
+            }
+        }
+        if (this.freezing != 0) {
+            this.freezing += 1;
+            this.rect(600,698,100,12);
+            float len = 96*((float) this.freezing/(600));
+            this.fill(153, 255, 255);
+            this.rect(602,700,len,8);
+            this.fill(255);
+            
+            if (this.freezing == 600) {
+                this.freezing = 0;
             }
         }
         for (Slime s : slimes) {
@@ -235,9 +281,70 @@ public class App extends PApplet {
         }
 
         // Check for collisions
-        if (exitTile.onTile(player, this)) {
-            this.level += 1;
+        List<Fireball> toRemoveF = new ArrayList<Fireball>();
+        List <Slime> toRemoveS = new ArrayList<Slime>();
+
+        for (Fireball f : fireballs) {
+            if (tileAt(f.getX(), f.getY()) != ' ') {
+                if (tileAt(f.getX(), f.getY()) == 'B') {
+                    int x = f.getX() - (f.getX()%20);
+                    int y = f.getY() - (f.getY()%20);
+
+                    broken.add(new brickTile(x, y, 0));
+                    System.out.println("x: " + x + "y: " + y);
+
+                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);
+                    tempString.setCharAt(x/20, 'D');
+                    this.layout[y/20] = tempString.toString();
+                }
+                toRemoveF.add(f);
+            }
+            for (Slime s : slimes) {
+                if ((grid(f.getX()) == grid(s.getX())) && (grid(f.getY()) == grid(s.getY()))) {
+                    if (toRemoveF.contains(f) == false) {
+                        toRemoveF.add(f);
+                    }
+                    toRemoveS.add(s);
+                }
+            }
+            for (Gremlin g : gremlins) {
+                if ((grid(f.getX()) == grid(g.getX())) && (grid(f.getY()) == grid(g.getY()))) {
+                    if (toRemoveF.contains(f) == false) {
+                        toRemoveF.add(f);
+                    }
+                    g.respawn(this, player);
+                }
+            }
+            
         }
+        slimes.removeAll(toRemoveS);
+        toRemoveS = new ArrayList<Slime>();
+        fireballs.removeAll(toRemoveF);
+
+        for (Slime s : slimes) {
+            if (tileAt(s.getX(), s.getY()) != ' ') {
+                toRemoveS.add(s);
+            }
+            if ((grid(player.getX()) == grid(s.getX())) && (grid(player.getY()) == grid(s.getY()))) {
+                this.lives -= 1;
+                this.tempLevel -= 1;
+            }
+        }
+        slimes.removeAll(toRemoveS);
+
+        // Update after check if destroyed
+        List<brickTile> toRemoveB = new ArrayList<brickTile>();
+        for (brickTile b : broken) {
+            if (b.change(this) == false) {
+
+                StringBuilder tempString = new StringBuilder(this.layout[b.getY()/20]);
+                tempString.setCharAt(b.getX()/20, ' ');
+                this.layout[b.getY()/20] = tempString.toString();
+                
+                toRemoveB.add(b);
+            }
+        }
+        broken.removeAll(toRemoveB);
     }
 
     /**
@@ -252,7 +359,10 @@ public class App extends PApplet {
             this.text("Game over", 300, 300);
             this.text("Q: Quit, R: Retry", 300, 350);
         } else {
-            if (level<this.levels.size()) {
+            if (this.won == 1) {
+                this.text("You win", 300, 300);
+                this.text("Q: Quit, R: Retry", 300, 350);
+            } else if (level < this.levels.size()) {
                 if (tempLevel != -1) {
                     collisions();
                 }
@@ -274,8 +384,12 @@ public class App extends PApplet {
                     }
                     y = y+20;
                 }
+                for (brickTile b : broken) {
+                    b.draw(this);
+                }
 
                 exitTile.draw(this);
+                freezeTile.draw(this);
                 player.draw(this);
                 if (player.shoot(this.fireballCooldown) == false) {
                     player.progressBar(this);
@@ -296,9 +410,6 @@ public class App extends PApplet {
                 }
                 this.text("Level " + (level+1) + "/" + (this.levels.size()), 170, 690);
                 this.text("Q: Quit, R: Respawn", 400, 690);
-            } else {
-                this.text("You win", 300, 300);
-                this.text("Q: Quit, R: Retry", 300, 350);
             }
         }
     }
