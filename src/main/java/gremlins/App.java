@@ -215,7 +215,8 @@ public class App extends PApplet {
      * Make my life easier
      */
     public int grid(int x) {
-        return (Math.round(x/20));
+        int temp = x - (x%20);
+        return temp/20;
     }
 
     /**
