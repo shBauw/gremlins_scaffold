@@ -42,6 +42,7 @@ public class App extends PApplet {
     public PImage brickwall2;
     public PImage brickwall3;
     public PImage freeze;
+    public PImage bomb;
     
 
     public int lives;
@@ -98,6 +99,7 @@ public class App extends PApplet {
         this.brickwall2 = loadImage(this.getClass().getResource("brickwall_destroyed2.png").getPath().replace("%20", " "));
         this.brickwall3 = loadImage(this.getClass().getResource("brickwall_destroyed3.png").getPath().replace("%20", " "));
         this.freeze = loadImage(this.getClass().getResource("freeze.png").getPath().replace("%20", " "));
+        this.bomb = loadImage(this.getClass().getResource("bomb.png").getPath().replace("%20", " "));
 
         JSONObject conf = loadJSONObject(new File(this.configPath));
         this.lives = conf.getInt("lives");
@@ -111,7 +113,13 @@ public class App extends PApplet {
      * Receive key pressed signal from the keyboard.
     */
     public void keyPressed(){
-        if (key == CODED) {
+        if (this.lives == 0 || this.won == 1) {
+            JSONObject conf = loadJSONObject(new File(this.configPath));
+            lives = conf.getInt("lives");
+            this.level = 0;
+            this.tempLevel = -1;
+            this.won = 0;
+        } else if (key == CODED) {
             if (keyCode == UP) {
                 player.setMovement(2, this);
             } else if (keyCode == LEFT) {
@@ -127,18 +135,8 @@ public class App extends PApplet {
                 player.shot();
             }
         } else if (key == 'r' || key == 'R') {
-            if (this.lives == 0 || this.won == 1) {
-                JSONObject conf = loadJSONObject(new File(this.configPath));
-                lives = conf.getInt("lives");
-                this.level = 0;
-                this.tempLevel = -1;
-                this.won = 0;
-            } else {
-                this.lives -= 1;
-                this.tempLevel -= 1;
-            }
-        } else if (key == 'q' || key == 'Q') {
-            exit();
+            this.lives -= 1;
+            this.tempLevel -= 1;
         }
     }
     
@@ -227,6 +225,14 @@ public class App extends PApplet {
         return this.layout[grid(y)].charAt(grid(x));
     }
 
+    public void destroy(int x, int y) {
+        broken.add(new brickTile(x, y, 0));
+
+        StringBuilder tempString = new StringBuilder(this.layout[y/20]);
+        tempString.setCharAt(x/20, 'D');
+        this.layout[y/20] = tempString.toString();
+    }
+
     /**
      * Check for collisions
      */
@@ -289,13 +295,54 @@ public class App extends PApplet {
                 if (tileAt(f.getX(), f.getY()) == 'B') {
                     int x = f.getX() - (f.getX()%20);
                     int y = f.getY() - (f.getY()%20);
+                    destroy(x,y);
+                } else if (tileAt(f.getX(), f.getY()) == 'V') {
+                    int x = f.getX() - (f.getX()%20);
+                    int y = f.getY() - (f.getY()%20);
+                    
+                    if (tileAt(x-20, y) == 'B') {
+                        destroy(x-20,y);
+                    }
+                    if (tileAt(x-20, y-20) == 'B') {
+                        destroy(x-20, y-20);
+                    }
+                    if (tileAt(x, y-20) == 'B') {
+                        destroy(x, y-20);
+                    }
+                    if (tileAt(x+20, y-20) == 'B') {
+                        destroy(x+20, y-20);
+                    }
+                    if (tileAt(x+20, y) == 'B') {
+                        destroy(x+20, y);
+                    }
+                    if (tileAt(x+20, y+20) == 'B') {
+                        destroy(x+20, y+20);
+                    }
+                    if (tileAt(x, y+20) == 'B') {
+                        destroy(x, y+20);
+                    }
+                    if (tileAt(x-20, y+20) == 'B') {
+                        destroy(x-20, y+20);
+                    }
 
-                    broken.add(new brickTile(x, y, 0));
-                    System.out.println("x: " + x + "y: " + y);
 
-                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);
-                    tempString.setCharAt(x/20, 'D');
-                    this.layout[y/20] = tempString.toString();
+                    for (Slime s : slimes) {
+                        if ((grid(x)-1 <= grid(s.getX())) && (grid(y)-1 <= grid(s.getY())) &&
+                            (grid(x)+1 >= grid(s.getX())) && (grid(y)+1 >= grid(s.getY()))) {
+                            toRemoveS.add(s);
+                        }
+                    }
+                    for (Gremlin g : gremlins) {
+                        if ((grid(x)-1 <= grid(g.getX())) && (grid(y)-1 <= grid(g.getY())) &&
+                            (grid(x)+1 >= grid(g.getX())) && (grid(y)+1 >= grid(g.getY()))) {
+                            g.respawn(this, player);
+                        }
+                    }
+                    if ((grid(x)-1 <= grid(player.getX())) && (grid(y)-1 <= grid(player.getY())) &&
+                        (grid(x)+1 >= grid(player.getX())) && (grid(y)+1 >= grid(player.getY()))) {
+                        this.lives -= 1;
+                        this.tempLevel -= 1;
+                    }
                 }
                 toRemoveF.add(f);
             }
@@ -357,11 +404,11 @@ public class App extends PApplet {
         // If level not finished: Reparse unbreakable objects everything else have to get from somewhere else.
         if (lives == 0) {
             this.text("Game over", 300, 300);
-            this.text("Q: Quit, R: Retry", 300, 350);
+            this.text("Press any key to restart or press Esc to quit", 300, 350);
         } else {
             if (this.won == 1) {
                 this.text("You win", 300, 300);
-                this.text("Q: Quit, R: Retry", 300, 350);
+                this.text("Press any key to restart or press Esc to quit", 300, 350);
             } else if (level < this.levels.size()) {
                 if (tempLevel != -1) {
                     collisions();
@@ -379,6 +426,8 @@ public class App extends PApplet {
                             this.image(this.stonewall, x, y);
                         } else if (eachString.charAt(i) == 'B') {
                             this.image(this.brickwall, x, y);
+                        } else if (eachString.charAt(i) == 'V') {
+                            this.image(this.bomb, x, y);
                         }
                         x = x+20;
                     }
@@ -409,7 +458,7 @@ public class App extends PApplet {
                     this.image(wizard2, x, 675);
                 }
                 this.text("Level " + (level+1) + "/" + (this.levels.size()), 170, 690);
-                this.text("Q: Quit, R: Respawn", 400, 690);
+                this.text("Esc: Quit, R: Respawn", 400, 690);
             }
         }
     }

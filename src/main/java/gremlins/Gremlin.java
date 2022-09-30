@@ -1,7 +1,6 @@
 package gremlins;
 
 import java.util.*;
-import java.awt.geom.Point2D;
 
 public class Gremlin extends Being{
     Random gen = new Random();
@@ -55,7 +54,8 @@ public class Gremlin extends Being{
         this.x = gen.nextInt(35)*20;
         this.y = gen.nextInt(32)*20;
         direction(app);
-        while ((app.tileAt(this.x, this.y) != ' ') || (Point2D.distance(this.x, this.y, player.getX(), player.getY()) < 10)) {
+        double distance = Math.sqrt((this.y - player.getY()) * (this.y - player.getY()) + (this.x - player.getX()) * (this.x - player.getX()));
+        while ((app.tileAt(this.x, this.y) != ' ') || (distance < 10)) {
             this.x = gen.nextInt(35)*20;
             this.y = gen.nextInt(32)*20;
             changer(app);
