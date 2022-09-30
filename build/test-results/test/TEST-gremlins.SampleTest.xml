@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="gremlins.SampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-28T07:33:20" hostname="Alis-MacBook-Air.local" time="0.009">
+<testsuite name="gremlins.SampleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-09-30T03:08:13" hostname="Alis-MacBook-Air.local" time="0.025">
   <properties/>
-  <testcase name="simpleTest()" classname="gremlins.SampleTest" time="0.009"/>
+  <testcase name="simpleTest()" classname="gremlins.SampleTest" time="0.025"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
