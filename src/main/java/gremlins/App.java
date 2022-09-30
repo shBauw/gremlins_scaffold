@@ -299,6 +299,10 @@ public class App extends PApplet {
                 } else if (tileAt(f.getX(), f.getY()) == 'V') {
                     int x = f.getX() - (f.getX()%20);
                     int y = f.getY() - (f.getY()%20);
+
+                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);
+                    tempString.setCharAt(x/20, ' ');
+                    this.layout[y/20] = tempString.toString();
                     
                     if (tileAt(x-20, y) == 'B') {
                         destroy(x-20,y);
