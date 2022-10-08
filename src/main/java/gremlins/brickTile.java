@@ -1,10 +1,21 @@
 package gremlins;
 
 public class brickTile extends Generic{
+    /**
+     * Initialising object
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dir dir used as a couter
+     */
     public brickTile(int x, int y, int dir) {
         super(x, y, dir);
     }
 
+    /**
+     * Changing sprite during destruction
+     * @param app used to get new sprites
+     * @return boolean, whether change is ongoing or not
+     */
     public boolean change(App app) {
         this.dir += 1;
         if (this.dir < 5) {
@@ -19,9 +30,5 @@ public class brickTile extends Generic{
             return false;
         }
         return true;
-    }
-
-    public void draw(App app) {
-        app.image(this.sprite, this.x, this.y);
     }
 }

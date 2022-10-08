@@ -3,9 +3,18 @@ package gremlins;
 import java.util.*;
 
 public class Gremlin extends Being{
+    // Create random generator
     Random gen = new Random();
+    // Define temporary movement variable
     private int tempMove;
 
+    /**
+     * Initialise gremlin
+     * @param x coordinate
+     * @param y coordinate
+     * @param dir direction
+     * @param app for sprite
+     */
     public Gremlin(int x, int y, int dir, App app) {
         super(x, y, dir);
         this.dir = gen.nextInt(4);
@@ -14,6 +23,10 @@ public class Gremlin extends Being{
         this.tempMove = 0;
     }
 
+    /**
+     * Change direction
+     * @param app used to find the tiles surround gremlin
+     */
     public void changer(App app){
         int checker = 0;
         if (app.tileAt(this.x, this.y-speed) != ' ') {
@@ -40,7 +53,10 @@ public class Gremlin extends Being{
         }  
     }
 
-    // New direction
+    /**
+     * Set a new temp direction
+     * @param app used to call changing direction
+     */
     public void direction(App app) {
         if (this.dir % 2 == 0) {
             this.tempMove = this.dir + 1;
@@ -49,7 +65,12 @@ public class Gremlin extends Being{
         }
         changer(app);
     }
-
+    
+    /**
+     * Respawn gremlin away from player
+     * @param app plug into new temp direction and changing direction
+     * @param player to find player coordinates
+     */
     public void respawn(App app, Player player) {
         this.x = gen.nextInt(35)*20;
         this.y = gen.nextInt(32)*20;
@@ -62,7 +83,10 @@ public class Gremlin extends Being{
         }
     }
 
-    // Automated movement function
+    /**
+     * Complete turn through moving
+     * @param app used for plugging into other functions
+     */
     public void turn(App app) {
         if (move(app) == false) {
             direction(app);

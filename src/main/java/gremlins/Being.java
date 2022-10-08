@@ -3,16 +3,26 @@ package gremlins;
 import java.lang.Math;
 
 public abstract class Being extends Generic {
+    // Define hereditary variables
     protected int lastShot;
     protected int speed;
     protected int stopMove;
 
+    /**
+     * Initialise objects
+     * @param x coordinate
+     * @param y coordinate
+     * @param dir used for direction
+     */
     public Being(int x, int y, int dir) {
         super(x, y, dir);
         this.lastShot = 9999;
         this.stopMove = 0;
     }
 
+    /**
+     * Movement
+     */
     public void up() {
         this.y -= speed;
     }
@@ -26,10 +36,15 @@ public abstract class Being extends Generic {
         this.y += speed;
     }
 
+    /**
+     * Start stopping movement
+     */
     public void stopMove() {
         this.stopMove = 1;
     }
-
+    /**
+     * Cleanly stopping movement
+     */
     public void stopMovement() {
         if ((this.x % 20 != 0) || (this.y % 20 != 0)) {
             if (this.dir == 0) {
@@ -44,10 +59,17 @@ public abstract class Being extends Generic {
         }
     }
 
+    /**
+     * Resetting cooldown when shot
+     */
     public void shot() {
         this.lastShot = 0;
     }
-
+    /**
+     * Checking if possible to shoot
+     * @param cooldown cooldown from config
+     * @return boolean whether can shoot or not
+     */
     public boolean shoot(float cooldown) {
         if (Math.round(cooldown*60) <= this.lastShot) {
             return true;
@@ -55,6 +77,11 @@ public abstract class Being extends Generic {
         return false;
     }
 
+    /**
+     * Movement if open space based on map
+     * @param app used to find the tile to move onto
+     * @return true if moved, false if not
+     */
     public boolean move(App app) {
         if (this.stopMove == 1) {
             stopMovement();
@@ -87,6 +114,10 @@ public abstract class Being extends Generic {
         return true;
     }
 
+    /**
+     * Modified drawing to increment last shot as well
+     * @param app used for drawing
+     */
     public void draw(App app) {
         this.lastShot += 1;
         app.image(this.sprite, this.x, this.y);
