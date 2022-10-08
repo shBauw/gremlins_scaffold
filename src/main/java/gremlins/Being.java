@@ -21,17 +21,26 @@ public abstract class Being extends Generic {
     }
 
     /**
-     * Movement
+     * Movement up
      */
     public void up() {
         this.y -= speed;
     }
+    /**
+     * Movement left
+     */
     public void left() {
         this.x -= speed;
     }
+    /**
+     * Movement right
+     */
     public void right() {
         this.x += speed;
     }
+    /**
+     * Movement down
+     */
     public void down() {
         this.y += speed;
     }
