@@ -1,7 +1,7 @@
 package gremlins;
 import java.util.*;
 
-public class freezeTile extends Generic{
+public class freezeTile extends Tile {
     // Initialise random generator
     Random gen = new Random();
 
@@ -16,21 +16,6 @@ public class freezeTile extends Generic{
         super(x, y, dir);
         this.sprite = app.freeze;
         broken();
-    }
-
-    /**
-     * Figure out if player is on the tile
-     * @param player to find their coordinates
-     * @param app to find if they have the same grid coordinates
-     * @return true if on tile, false if not
-     */
-    public boolean onTile(Player player, App app) {
-        if ((app.grid(player.getX()) == app.grid(this.x)) && (app.grid(player.getY()) == app.grid(this.y))) {
-            broken();
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

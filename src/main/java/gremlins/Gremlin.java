@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Gremlin extends Being{
     // Create random generator
-    Random gen = new Random();
+    private Random gen  = new Random();
     // Define temporary movement variable
     private int tempMove;
 

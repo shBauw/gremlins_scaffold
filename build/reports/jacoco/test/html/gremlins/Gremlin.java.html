@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Gremlin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gremlins_scaffold</a> &gt; <a href="index.source.html" class="el_package">gremlins</a> &gt; <span class="el_source">Gremlin.java</span></div><h1>Gremlin.java</h1><pre class="source lang-java linenums">package gremlins;
+
+import java.util.*;
+
+public class Gremlin extends Being{
+    // Create random generator
+<span class="nc" id="L7">    private Random gen  = new Random();</span>
+    // Define temporary movement variable
+    private int tempMove;
+
+    /**
+     * Initialise gremlin
+     * @param x coordinate
+     * @param y coordinate
+     * @param dir direction
+     * @param app for sprite
+     */
+    public Gremlin(int x, int y, int dir, App app) {
+<span class="nc" id="L19">        super(x, y, dir);</span>
+<span class="nc" id="L20">        this.dir = gen.nextInt(4);</span>
+<span class="nc" id="L21">        this.speed = 1;</span>
+<span class="nc" id="L22">        this.sprite = app.gremlin;</span>
+<span class="nc" id="L23">        this.tempMove = 0;</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Change direction
+     * @param app used to find the tiles surround gremlin
+     */
+    public void changer(App app){
+<span class="nc" id="L31">        int checker = 0;</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (app.tileAt(this.x, this.y-speed) != ' ') {</span>
+<span class="nc" id="L33">            checker += 1;</span>
+        } 
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (app.tileAt(this.x-speed, this.y) != ' ') {</span>
+<span class="nc" id="L36">            checker += 1;</span>
+        } 
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (app.tileAt(this.x+20, this.y) != ' ') {</span>
+<span class="nc" id="L39">            checker += 1;</span>
+        } 
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (app.tileAt(this.x, this.y+20) != ' ') {</span>
+<span class="nc" id="L42">            checker += 1;</span>
+        }
+
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (checker == 3) {</span>
+<span class="nc" id="L47">            this.dir = this.tempMove;</span>
+        } else {
+<span class="nc" id="L49">            this.dir = gen.nextInt(4);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            while (this.tempMove == this.dir) {</span>
+<span class="nc" id="L51">                this.dir = gen.nextInt(4);</span>
+            }
+        }  
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Set a new temp direction
+     * @param app used to call changing direction
+     */
+    public void direction(App app) {
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (this.dir % 2 == 0) {</span>
+<span class="nc" id="L62">            this.tempMove = this.dir + 1;</span>
+        } else {
+<span class="nc" id="L64">            this.tempMove = this.dir - 1;</span>
+        }
+<span class="nc" id="L66">        changer(app);</span>
+<span class="nc" id="L67">    }</span>
+    
+    /**
+     * Respawn gremlin away from player
+     * @param app plug into new temp direction and changing direction
+     * @param player to find player coordinates
+     */
+    public void respawn(App app, Player player) {
+<span class="nc" id="L75">        this.x = gen.nextInt(35)*20;</span>
+<span class="nc" id="L76">        this.y = gen.nextInt(32)*20;</span>
+<span class="nc" id="L77">        direction(app);</span>
+<span class="nc" id="L78">        double distance = Math.sqrt((this.y - player.getY()) * (this.y - player.getY()) + (this.x - player.getX()) * (this.x - player.getX()));</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">        while ((app.tileAt(this.x, this.y) != ' ') || (distance &lt; 10)) {</span>
+<span class="nc" id="L80">            this.x = gen.nextInt(35)*20;</span>
+<span class="nc" id="L81">            this.y = gen.nextInt(32)*20;</span>
+<span class="nc" id="L82">            changer(app);</span>
+        }
+<span class="nc" id="L84">    }</span>
+
+    /**
+     * Complete turn through moving
+     * @param app used for plugging into other functions
+     */
+    public void turn(App app) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (move(app) == false) {</span>
+<span class="nc" id="L92">            direction(app);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            while (move(app) == false) {</span>
+<span class="nc" id="L94">                changer(app);</span>
+            }
+        }
+<span class="nc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

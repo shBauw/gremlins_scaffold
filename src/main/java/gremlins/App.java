@@ -137,6 +137,7 @@ public class App extends PApplet {
         if (this.lives == 0 || this.won == 1) {
             setup();
         } else if (key == CODED) {
+            // Prevents 2 keys from being recognised at once
             if (keyCode == UP) {
                 player.setMovement(2, this);
             } else if (keyCode == LEFT) {
@@ -311,6 +312,7 @@ public class App extends PApplet {
             }
         } else if (freezeTile.onTile(player, this)) {
             this.freezing += 1;
+            freezeTile.broken();
         }
 
         // Do all the movements
