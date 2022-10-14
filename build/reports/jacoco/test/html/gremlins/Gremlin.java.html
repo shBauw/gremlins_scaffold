@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Gremlin extends Being{
     // Create random generator
-<span class="nc" id="L7">    private Random gen  = new Random();</span>
+<span class="fc" id="L7">    private Random gen  = new Random();</span>
     // Define temporary movement variable
     private int tempMove;
 
@@ -16,19 +16,19 @@ public class Gremlin extends Being{
      * @param app for sprite
      */
     public Gremlin(int x, int y, int dir, App app) {
-<span class="nc" id="L19">        super(x, y, dir);</span>
-<span class="nc" id="L20">        this.dir = gen.nextInt(4);</span>
-<span class="nc" id="L21">        this.speed = 1;</span>
-<span class="nc" id="L22">        this.sprite = app.gremlin;</span>
-<span class="nc" id="L23">        this.tempMove = 0;</span>
-<span class="nc" id="L24">    }</span>
+<span class="fc" id="L19">        super(x, y, dir);</span>
+<span class="fc" id="L20">        this.dir = gen.nextInt(4);</span>
+<span class="fc" id="L21">        this.speed = 1;</span>
+<span class="fc" id="L22">        this.sprite = app.gremlin;</span>
+<span class="fc" id="L23">        this.tempMove = 0;</span>
+<span class="fc" id="L24">    }</span>
 
     /**
      * Change direction
      * @param app used to find the tiles surround gremlin
      */
     public void changer(App app){
-<span class="nc" id="L31">        int checker = 0;</span>
+<span class="fc" id="L31">        int checker = 0;</span>
 <span class="nc bnc" id="L32" title="All 2 branches missed.">        if (app.tileAt(this.x, this.y-speed) != ' ') {</span>
 <span class="nc" id="L33">            checker += 1;</span>
         } 
@@ -58,8 +58,8 @@ public class Gremlin extends Being{
      * @param app used to call changing direction
      */
     public void direction(App app) {
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (this.dir % 2 == 0) {</span>
-<span class="nc" id="L62">            this.tempMove = this.dir + 1;</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (this.dir % 2 == 0) {</span>
+<span class="fc" id="L62">            this.tempMove = this.dir + 1;</span>
         } else {
 <span class="nc" id="L64">            this.tempMove = this.dir - 1;</span>
         }

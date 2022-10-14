@@ -3,7 +3,7 @@ import java.util.*;
 
 public class freezeTile extends Tile {
     // Initialise random generator
-<span class="nc" id="L6">    Random gen = new Random();</span>
+<span class="fc" id="L6">    Random gen = new Random();</span>
 
     /**
      * Initialise freezetile
@@ -13,28 +13,28 @@ public class freezeTile extends Tile {
      * @param app used for sprite
      */
     public freezeTile(int x, int y, int dir, App app) {
-<span class="nc" id="L16">        super(x, y, dir);</span>
-<span class="nc" id="L17">        this.sprite = app.freeze;</span>
-<span class="nc" id="L18">        broken();</span>
-<span class="nc" id="L19">    }</span>
+<span class="fc" id="L16">        super(x, y, dir);</span>
+<span class="fc" id="L17">        this.sprite = app.freeze;</span>
+<span class="fc" id="L18">        broken();</span>
+<span class="fc" id="L19">    }</span>
 
     /**
      * If broken take a random number to help with generation
      */
     public void broken() {
-<span class="nc" id="L25">        dir = gen.nextInt(300);</span>
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L25">        dir = gen.nextInt(300);</span>
+<span class="fc" id="L26">    }</span>
 
     /**
      * Modified draw to see when to make it
      * @param app used for drawing
      */
     public void draw(App app) {
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (dir &gt; 600) {</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (dir &gt; 600) {</span>
 <span class="nc" id="L34">            app.image(this.sprite, this.x, this.y);</span>
         } else {
-<span class="nc" id="L36">            dir += 1;</span>
+<span class="fc" id="L36">            dir += 1;</span>
         }
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L38">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

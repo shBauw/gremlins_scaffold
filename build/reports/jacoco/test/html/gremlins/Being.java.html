@@ -15,73 +15,73 @@ public abstract class Being extends Generic {
      * @param dir used for direction
      */
     public Being(int x, int y, int dir) {
-<span class="nc" id="L18">        super(x, y, dir);</span>
-<span class="nc" id="L19">        this.lastShot = 9999;</span>
-<span class="nc" id="L20">        this.stopMove = 0;</span>
-<span class="nc" id="L21">    }</span>
+<span class="fc" id="L18">        super(x, y, dir);</span>
+<span class="fc" id="L19">        this.lastShot = 9999;</span>
+<span class="fc" id="L20">        this.stopMove = 0;</span>
+<span class="fc" id="L21">    }</span>
 
     /**
      * Movement up
      */
     public void up() {
-<span class="nc" id="L27">        this.y -= speed;</span>
-<span class="nc" id="L28">    }</span>
+<span class="fc" id="L27">        this.y -= speed;</span>
+<span class="fc" id="L28">    }</span>
     /**
      * Movement left
      */
     public void left() {
-<span class="nc" id="L33">        this.x -= speed;</span>
-<span class="nc" id="L34">    }</span>
+<span class="fc" id="L33">        this.x -= speed;</span>
+<span class="fc" id="L34">    }</span>
     /**
      * Movement right
      */
     public void right() {
-<span class="nc" id="L39">        this.x += speed;</span>
-<span class="nc" id="L40">    }</span>
+<span class="fc" id="L39">        this.x += speed;</span>
+<span class="fc" id="L40">    }</span>
     /**
      * Movement down
      */
     public void down() {
-<span class="nc" id="L45">        this.y += speed;</span>
-<span class="nc" id="L46">    }</span>
+<span class="fc" id="L45">        this.y += speed;</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Start stopping movement
      */
     public void stopMove() {
-<span class="nc" id="L52">        this.stopMove = 1;</span>
-<span class="nc" id="L53">    }</span>
+<span class="fc" id="L52">        this.stopMove = 1;</span>
+<span class="fc" id="L53">    }</span>
     /**
      * Cleanly stopping movement
      */
     public void stopMovement() {
-<span class="nc bnc" id="L58" title="All 4 branches missed.">        if ((this.x % 20 != 0) || (this.y % 20 != 0)) {</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (this.dir == 0) {</span>
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">        if ((this.x % 20 != 0) || (this.y % 20 != 0)) {</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (this.dir == 0) {</span>
 <span class="nc" id="L60">                left();</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">            } else if (this.dir == 1) {</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">            } else if (this.dir == 1) {</span>
 <span class="nc" id="L62">                right();</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            } else if (this.dir == 2) {</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">            } else if (this.dir == 2) {</span>
 <span class="nc" id="L64">                up();</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">            } else if (this.dir == 3) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            } else if (this.dir == 3) {</span>
 <span class="nc" id="L66">                down();</span>
             }
         }
-<span class="nc" id="L69">    }</span>
+<span class="fc" id="L69">    }</span>
 
     /**
      * Resetting cooldown when shot
      */
     public void shot() {
-<span class="nc" id="L75">        this.lastShot = 0;</span>
-<span class="nc" id="L76">    }</span>
+<span class="fc" id="L75">        this.lastShot = 0;</span>
+<span class="fc" id="L76">    }</span>
     /**
      * Checking if possible to shoot
      * @param cooldown cooldown from config
      * @return boolean whether can shoot or not
      */
     public boolean shoot(float cooldown) {
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (Math.round(cooldown*60) &lt;= this.lastShot) {</span>
-<span class="nc" id="L84">            return true;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (Math.round(cooldown*60) &lt;= this.lastShot) {</span>
+<span class="fc" id="L84">            return true;</span>
         }
 <span class="nc" id="L86">        return false;</span>
     }
@@ -92,9 +92,9 @@ public abstract class Being extends Generic {
      * @return true if moved, false if not
      */
     public boolean move(App app) {
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        if (this.stopMove == 1) {</span>
-<span class="nc" id="L96">            stopMovement();</span>
-<span class="nc" id="L97">            return false;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (this.stopMove == 1) {</span>
+<span class="fc" id="L96">            stopMovement();</span>
+<span class="fc" id="L97">            return false;</span>
 <span class="nc bnc" id="L98" title="All 2 branches missed.">        } else if (this.dir == 2) {</span>
 <span class="nc bnc" id="L99" title="All 2 branches missed.">            if (app.tileAt(this.x, this.y-speed) == ' ') {</span>
 <span class="nc" id="L100">                up();</span>
@@ -128,8 +128,8 @@ public abstract class Being extends Generic {
      * @param app used for drawing
      */
     public void draw(App app) {
-<span class="nc" id="L131">        this.lastShot += 1;</span>
-<span class="nc" id="L132">        app.image(this.sprite, this.x, this.y);</span>
-<span class="nc" id="L133">    }</span>
+<span class="fc" id="L131">        this.lastShot += 1;</span>
+<span class="fc" id="L132">        app.image(this.sprite, this.x, this.y);</span>
+<span class="fc" id="L133">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

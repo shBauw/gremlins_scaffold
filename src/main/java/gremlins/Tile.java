@@ -1,6 +1,6 @@
 package gremlins;
 
-public class Tile extends Generic {
+public abstract class Tile extends Generic {
     /**
      * Initialising object
      * @param x x-coordinate

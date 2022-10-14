@@ -25,7 +25,7 @@ public class App extends PApplet {
     public static final int FPS = 60;
 
     // Initialise randomgenerator
-<span class="nc" id="L28">    public static final Random randomGenerator = new Random();</span>
+<span class="fc" id="L28">    public static final Random randomGenerator = new Random();</span>
 
     // Define needed variables
     public String configPath;
@@ -74,16 +74,16 @@ public class App extends PApplet {
     public int freezing;
 
 
-<span class="nc" id="L77">    public App() {</span>
-<span class="nc" id="L78">        this.configPath = &quot;config.json&quot;;</span>
-<span class="nc" id="L79">    }</span>
+<span class="fc" id="L77">    public App() {</span>
+<span class="fc" id="L78">        this.configPath = &quot;config.json&quot;;</span>
+<span class="fc" id="L79">    }</span>
 
     /**
      * Initialise the setting of the window size.
     */
     public void settings() {
-<span class="nc" id="L85">        size(WIDTH, HEIGHT);</span>
-<span class="nc" id="L86">    }</span>
+<span class="fc" id="L85">        size(WIDTH, HEIGHT);</span>
+<span class="fc" id="L86">    }</span>
 
     /**
      * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
@@ -91,43 +91,43 @@ public class App extends PApplet {
      * @throws RunTimeException if config file incorrect or not found
     */
     public void setup() {
-<span class="nc" id="L94">        frameRate(FPS);</span>
-<span class="nc" id="L95">        this.error = 0;</span>
+<span class="fc" id="L94">        frameRate(FPS);</span>
+<span class="fc" id="L95">        this.error = 0;</span>
 
         // Load images during setup
         try {
-<span class="nc" id="L99">            this.stonewall = loadImage(this.getClass().getResource(&quot;stonewall.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L100">            this.brickwall = loadImage(this.getClass().getResource(&quot;brickwall.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L101">            this.gremlin = loadImage(this.getClass().getResource(&quot;gremlin.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L102">            this.slime = loadImage(this.getClass().getResource(&quot;slime.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L103">            this.fireball = loadImage(this.getClass().getResource(&quot;fireball.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L104">            this.wizard0 = loadImage(this.getClass().getResource(&quot;wizard0.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L105">            this.wizard1 = loadImage(this.getClass().getResource(&quot;wizard1.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L106">            this.wizard2 = loadImage(this.getClass().getResource(&quot;wizard2.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L107">            this.wizard3 = loadImage(this.getClass().getResource(&quot;wizard3.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L108">            this.exit = loadImage(this.getClass().getResource(&quot;exit.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L109">            this.brickwall0 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed0.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L110">            this.brickwall1 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed1.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L111">            this.brickwall2 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed2.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L112">            this.brickwall3 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed3.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L113">            this.freeze = loadImage(this.getClass().getResource(&quot;freeze.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
-<span class="nc" id="L114">            this.bomb = loadImage(this.getClass().getResource(&quot;bomb.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L99">            this.stonewall = loadImage(this.getClass().getResource(&quot;stonewall.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L100">            this.brickwall = loadImage(this.getClass().getResource(&quot;brickwall.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L101">            this.gremlin = loadImage(this.getClass().getResource(&quot;gremlin.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L102">            this.slime = loadImage(this.getClass().getResource(&quot;slime.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L103">            this.fireball = loadImage(this.getClass().getResource(&quot;fireball.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L104">            this.wizard0 = loadImage(this.getClass().getResource(&quot;wizard0.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L105">            this.wizard1 = loadImage(this.getClass().getResource(&quot;wizard1.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L106">            this.wizard2 = loadImage(this.getClass().getResource(&quot;wizard2.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L107">            this.wizard3 = loadImage(this.getClass().getResource(&quot;wizard3.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L108">            this.exit = loadImage(this.getClass().getResource(&quot;exit.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L109">            this.brickwall0 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed0.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L110">            this.brickwall1 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed1.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L111">            this.brickwall2 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed2.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L112">            this.brickwall3 = loadImage(this.getClass().getResource(&quot;brickwall_destroyed3.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L113">            this.freeze = loadImage(this.getClass().getResource(&quot;freeze.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
+<span class="fc" id="L114">            this.bomb = loadImage(this.getClass().getResource(&quot;bomb.png&quot;).getPath().replace(&quot;%20&quot;, &quot; &quot;));</span>
 <span class="nc" id="L115">        } catch (NullPointerException e) {</span>
 <span class="nc" id="L116">            this.error = 1;</span>
-<span class="nc" id="L117">        }</span>
+<span class="fc" id="L117">        }</span>
         
         // Initialise config files and get some details
         try {
-<span class="nc" id="L121">            JSONObject conf = loadJSONObject(new File(this.configPath));</span>
-<span class="nc" id="L122">            this.lives = conf.getInt(&quot;lives&quot;);</span>
-<span class="nc" id="L123">            this.levels = conf.getJSONArray(&quot;levels&quot;);</span>
+<span class="fc" id="L121">            JSONObject conf = loadJSONObject(new File(this.configPath));</span>
+<span class="fc" id="L122">            this.lives = conf.getInt(&quot;lives&quot;);</span>
+<span class="fc" id="L123">            this.levels = conf.getJSONArray(&quot;levels&quot;);</span>
 <span class="nc" id="L124">        } catch (RuntimeException e) {</span>
 <span class="nc" id="L125">            this.error = 1;</span>
-<span class="nc" id="L126">        }</span>
+<span class="fc" id="L126">        }</span>
 
-<span class="nc" id="L128">        this.level = 0;</span>
-<span class="nc" id="L129">        this.tempLevel = -1;</span>
-<span class="nc" id="L130">    }</span>
+<span class="fc" id="L128">        this.level = 0;</span>
+<span class="fc" id="L129">        this.tempLevel = -1;</span>
+<span class="fc" id="L130">    }</span>
 
     /**
      * Receive key pressed signal from the keyboard.
@@ -175,104 +175,104 @@ public class App extends PApplet {
      */
     public void resetMap(){
         // Lists of objects
-<span class="nc" id="L178">        fireballs = new ArrayList&lt;Fireball&gt;();</span>
-<span class="nc" id="L179">        slimes = new ArrayList&lt;Slime&gt;();</span>
-<span class="nc" id="L180">        gremlins = new ArrayList&lt;Gremlin&gt;();</span>
-<span class="nc" id="L181">        broken = new ArrayList&lt;brickTile&gt;();</span>
+<span class="fc" id="L178">        fireballs = new ArrayList&lt;Fireball&gt;();</span>
+<span class="fc" id="L179">        slimes = new ArrayList&lt;Slime&gt;();</span>
+<span class="fc" id="L180">        gremlins = new ArrayList&lt;Gremlin&gt;();</span>
+<span class="fc" id="L181">        broken = new ArrayList&lt;brickTile&gt;();</span>
 
         // Reset frozen
-<span class="nc" id="L184">        this.freezing = 0;</span>
+<span class="fc" id="L184">        this.freezing = 0;</span>
 
         // Get details from config file, throw exception if not there
         try {
-<span class="nc" id="L188">            this.currentLevel = this.levels.getJSONObject(this.level);</span>
-<span class="nc" id="L189">            this.fireballCooldown = this.currentLevel.getFloat(&quot;wizard_cooldown&quot;);</span>
-<span class="nc" id="L190">            this.slimeCooldown = this.currentLevel.getFloat(&quot;enemy_cooldown&quot;);</span>
-<span class="nc" id="L191">            this.layoutName = this.currentLevel.getString(&quot;layout&quot;);</span>
+<span class="fc" id="L188">            this.currentLevel = this.levels.getJSONObject(this.level);</span>
+<span class="fc" id="L189">            this.fireballCooldown = this.currentLevel.getFloat(&quot;wizard_cooldown&quot;);</span>
+<span class="fc" id="L190">            this.slimeCooldown = this.currentLevel.getFloat(&quot;enemy_cooldown&quot;);</span>
+<span class="fc" id="L191">            this.layoutName = this.currentLevel.getString(&quot;layout&quot;);</span>
 <span class="nc" id="L192">        } catch (RuntimeException e) {</span>
 <span class="nc" id="L193">            this.error = 1;</span>
-<span class="nc" id="L194">        }</span>
+<span class="fc" id="L194">        }</span>
         
         // Initialise map, able to throw FileNotFound exception if it does not exist
-<span class="nc" id="L197">        List&lt;String&gt; listOfStrings = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L197">        List&lt;String&gt; listOfStrings = new ArrayList&lt;String&gt;();</span>
         try {
-<span class="nc" id="L199">            Scanner sc = new Scanner(new FileReader(this.layoutName));</span>
+<span class="fc" id="L199">            Scanner sc = new Scanner(new FileReader(this.layoutName));</span>
             String str;
-<span class="nc bnc" id="L201" title="All 2 branches missed.">            while (sc.hasNextLine()) {</span>
-<span class="nc" id="L202">                str = sc.nextLine();</span>
-<span class="nc" id="L203">                listOfStrings.add(str);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            while (sc.hasNextLine()) {</span>
+<span class="fc" id="L202">                str = sc.nextLine();</span>
+<span class="fc" id="L203">                listOfStrings.add(str);</span>
             }
 <span class="nc" id="L205">        } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L206">            this.error = 1;</span>
-<span class="nc" id="L207">        }</span>
-<span class="nc" id="L208">        this.layout = listOfStrings.toArray(new String[listOfStrings.size()]);</span>
+<span class="fc" id="L207">        }</span>
+<span class="fc" id="L208">        this.layout = listOfStrings.toArray(new String[listOfStrings.size()]);</span>
         // Check if correct size
-<span class="nc bnc" id="L210" title="All 2 branches missed.">        if (this.layout.length != 33) {</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (this.layout.length != 33) {</span>
 <span class="nc" id="L211">            this.error = 2;</span>
         } else {
             // Check if surrounding by Xs, correct size
-<span class="nc bnc" id="L214" title="All 2 branches missed.">            for (int i = 0; i &lt; this.layout.length; i++) {</span>
-<span class="nc bnc" id="L215" title="All 4 branches missed.">                if (i == 0 || i == 32) {</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">                    for (int j = 0; j &lt; this.layout[i].length(); j++) {</span>
-<span class="nc bnc" id="L217" title="All 2 branches missed.">                        if (this.layout[i].charAt(j) != 'X') {</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            for (int i = 0; i &lt; this.layout.length; i++) {</span>
+<span class="fc bfc" id="L215" title="All 4 branches covered.">                if (i == 0 || i == 32) {</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">                    for (int j = 0; j &lt; this.layout[i].length(); j++) {</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">                        if (this.layout[i].charAt(j) != 'X') {</span>
 <span class="nc" id="L218">                            this.error = 2;</span>
                         }
                     }
-<span class="nc bnc" id="L221" title="All 4 branches missed.">                } else if (this.layout[i].charAt(0) != 'X' || this.layout[i].charAt(35) != 'X') {</span>
+<span class="pc bpc" id="L221" title="2 of 4 branches missed.">                } else if (this.layout[i].charAt(0) != 'X' || this.layout[i].charAt(35) != 'X') {</span>
 <span class="nc" id="L222">                    this.error = 2;</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">                } else if (this.layout[i].length() != 36) {</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">                } else if (this.layout[i].length() != 36) {</span>
 <span class="nc" id="L224">                    this.error = 2;</span>
                 }
             }
 
             // Initialise tiles needed
-<span class="nc" id="L229">            int y = 0;</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">            for (String eachString : this.layout) {</span>
-<span class="nc" id="L231">                int x = 0;</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">                for (int i = 0; i &lt; eachString.length(); i++) {</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">                    if (eachString.charAt(i) == 'W') {</span>
+<span class="fc" id="L229">            int y = 0;</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">            for (String eachString : this.layout) {</span>
+<span class="fc" id="L231">                int x = 0;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">                for (int i = 0; i &lt; eachString.length(); i++) {</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">                    if (eachString.charAt(i) == 'W') {</span>
                         // Found starting position for player (x, y)
-<span class="nc" id="L235">                        player = new Player(x,y, 2, this);</span>
+<span class="fc" id="L235">                        player = new Player(x,y, 2, this);</span>
                         // Remove player marker from tempstring
-<span class="nc" id="L237">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
-<span class="nc" id="L238">                        tempString.setCharAt(x/20, ' ');</span>
-<span class="nc" id="L239">                        this.layout[y/20] = tempString.toString();</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">                    } else if (eachString.charAt(i) == 'G') {</span>
-<span class="nc" id="L241">                        gremlins.add(new Gremlin(x, y, 0, this));</span>
+<span class="fc" id="L237">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
+<span class="fc" id="L238">                        tempString.setCharAt(x/20, ' ');</span>
+<span class="fc" id="L239">                        this.layout[y/20] = tempString.toString();</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">                    } else if (eachString.charAt(i) == 'G') {</span>
+<span class="fc" id="L241">                        gremlins.add(new Gremlin(x, y, 0, this));</span>
 
-<span class="nc" id="L243">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
-<span class="nc" id="L244">                        tempString.setCharAt(x/20, ' ');</span>
-<span class="nc" id="L245">                        this.layout[y/20] = tempString.toString();</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">                    } else if (eachString.charAt(i) == 'E') {</span>
-<span class="nc" id="L247">                        exitTile = new exitTile(x, y, 0, this);</span>
+<span class="fc" id="L243">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
+<span class="fc" id="L244">                        tempString.setCharAt(x/20, ' ');</span>
+<span class="fc" id="L245">                        this.layout[y/20] = tempString.toString();</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">                    } else if (eachString.charAt(i) == 'E') {</span>
+<span class="fc" id="L247">                        exitTile = new exitTile(x, y, 0, this);</span>
 
-<span class="nc" id="L249">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
-<span class="nc" id="L250">                        tempString.setCharAt(x/20, ' ');</span>
-<span class="nc" id="L251">                        this.layout[y/20] = tempString.toString();</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">                    } else if (eachString.charAt(i) == 'F') {</span>
-<span class="nc" id="L253">                        freezeTile = new freezeTile(x, y, 0, this);</span>
+<span class="fc" id="L249">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
+<span class="fc" id="L250">                        tempString.setCharAt(x/20, ' ');</span>
+<span class="fc" id="L251">                        this.layout[y/20] = tempString.toString();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">                    } else if (eachString.charAt(i) == 'F') {</span>
+<span class="fc" id="L253">                        freezeTile = new freezeTile(x, y, 0, this);</span>
 
-<span class="nc" id="L255">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
-<span class="nc" id="L256">                        tempString.setCharAt(x/20, ' ');</span>
-<span class="nc" id="L257">                        this.layout[y/20] = tempString.toString();</span>
+<span class="fc" id="L255">                        StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
+<span class="fc" id="L256">                        tempString.setCharAt(x/20, ' ');</span>
+<span class="fc" id="L257">                        this.layout[y/20] = tempString.toString();</span>
                     // Error check for unknown tiles
-<span class="nc bnc" id="L259" title="All 2 branches missed.">                    } else if (&quot;X BV&quot;.indexOf(eachString.charAt(i)) == -1) {</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">                    } else if (&quot;X BV&quot;.indexOf(eachString.charAt(i)) == -1) {</span>
 <span class="nc" id="L260">                        this.error = 2;</span>
                     }
-<span class="nc" id="L262">                    x = x+20;</span>
+<span class="fc" id="L262">                    x = x+20;</span>
                 }
-<span class="nc" id="L264">                y = y+20;</span>
+<span class="fc" id="L264">                y = y+20;</span>
             }
         }
-<span class="nc" id="L267">    }</span>
+<span class="fc" id="L267">    }</span>
 
     /**
      * Find grid coordinate of pizels, make life easier
      * @param x Coordinate
      */
     public int grid(int x) {
-<span class="nc" id="L274">        int temp = x - (x%20);</span>
-<span class="nc" id="L275">        return temp/20;</span>
+<span class="fc" id="L274">        int temp = x - (x%20);</span>
+<span class="fc" id="L275">        return temp/20;</span>
     }
 
     /**
@@ -312,251 +312,252 @@ public class App extends PApplet {
             }
 <span class="nc bnc" id="L313" title="All 2 branches missed.">        } else if (freezeTile.onTile(player, this)) {</span>
 <span class="nc" id="L314">            this.freezing += 1;</span>
+<span class="nc" id="L315">            freezeTile.broken();</span>
         }
 
         // Do all the movements
-<span class="nc" id="L318">        player.move(this);</span>
-<span class="nc bnc" id="L319" title="All 2 branches missed.">        for (Fireball f : fireballs) {</span>
-<span class="nc" id="L320">            f.move();</span>
-<span class="nc" id="L321">        }</span>
+<span class="nc" id="L319">        player.move(this);</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">        for (Fireball f : fireballs) {</span>
+<span class="nc" id="L321">            f.move();</span>
+<span class="nc" id="L322">        }</span>
 
-<span class="nc bnc" id="L323" title="All 2 branches missed.">        for (Gremlin g : gremlins) {</span>
-<span class="nc bnc" id="L324" title="All 2 branches missed.">            if (this.freezing == 0) {</span>
-<span class="nc" id="L325">                g.turn(this);</span>
-<span class="nc bnc" id="L326" title="All 2 branches missed.">                if (g.shoot(this.slimeCooldown) == true) {</span>
-<span class="nc" id="L327">                    slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));</span>
-<span class="nc" id="L328">                    g.shot();</span>
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        for (Gremlin g : gremlins) {</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">            if (this.freezing == 0) {</span>
+<span class="nc" id="L326">                g.turn(this);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">                if (g.shoot(this.slimeCooldown) == true) {</span>
+<span class="nc" id="L328">                    slimes.add(new Slime(g.getX(), g.getY(), g.getDir(), this));</span>
+<span class="nc" id="L329">                    g.shot();</span>
                 }
             }
 
-<span class="nc bnc" id="L332" title="All 4 branches missed.">            if ((grid(player.getX()) == grid(g.getX())) &amp;&amp; (grid(player.getY()) == grid(g.getY()))) {</span>
-<span class="nc" id="L333">                this.lives -= 1;</span>
-<span class="nc" id="L334">                this.tempLevel -= 1;</span>
+<span class="nc bnc" id="L333" title="All 4 branches missed.">            if ((grid(player.getX()) == grid(g.getX())) &amp;&amp; (grid(player.getY()) == grid(g.getY()))) {</span>
+<span class="nc" id="L334">                this.lives -= 1;</span>
+<span class="nc" id="L335">                this.tempLevel -= 1;</span>
             }
-<span class="nc" id="L336">        }</span>
+<span class="nc" id="L337">        }</span>
         // Check if gremlins should be frozen, progress bar if so
-<span class="nc bnc" id="L338" title="All 2 branches missed.">        if (this.freezing != 0) {</span>
-<span class="nc" id="L339">            this.freezing += 1;</span>
-<span class="nc" id="L340">            this.rect(600,698,100,12);</span>
-<span class="nc" id="L341">            float len = 96*((float) this.freezing/(600));</span>
-<span class="nc" id="L342">            this.fill(153, 255, 255);</span>
-<span class="nc" id="L343">            this.rect(602,700,len,8);</span>
-<span class="nc" id="L344">            this.fill(255);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">        if (this.freezing != 0) {</span>
+<span class="nc" id="L340">            this.freezing += 1;</span>
+<span class="nc" id="L341">            this.rect(600,698,100,12);</span>
+<span class="nc" id="L342">            float len = 96*((float) this.freezing/(600));</span>
+<span class="nc" id="L343">            this.fill(153, 255, 255);</span>
+<span class="nc" id="L344">            this.rect(602,700,len,8);</span>
+<span class="nc" id="L345">            this.fill(255);</span>
             
-<span class="nc bnc" id="L346" title="All 2 branches missed.">            if (this.freezing == 600) {</span>
-<span class="nc" id="L347">                this.freezing = 0;</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">            if (this.freezing == 600) {</span>
+<span class="nc" id="L348">                this.freezing = 0;</span>
             }
         }
-<span class="nc bnc" id="L350" title="All 2 branches missed.">        for (Slime s : slimes) {</span>
-<span class="nc" id="L351">            s.move();</span>
-<span class="nc" id="L352">        }</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">        for (Slime s : slimes) {</span>
+<span class="nc" id="L352">            s.move();</span>
+<span class="nc" id="L353">        }</span>
 
         // Check for collisions
-<span class="nc" id="L355">        List&lt;Fireball&gt; toRemoveF = new ArrayList&lt;Fireball&gt;();</span>
-<span class="nc" id="L356">        List &lt;Slime&gt; toRemoveS = new ArrayList&lt;Slime&gt;();</span>
+<span class="nc" id="L356">        List&lt;Fireball&gt; toRemoveF = new ArrayList&lt;Fireball&gt;();</span>
+<span class="nc" id="L357">        List &lt;Slime&gt; toRemoveS = new ArrayList&lt;Slime&gt;();</span>
 
         // Fireballs
-<span class="nc bnc" id="L359" title="All 2 branches missed.">        for (Fireball f : fireballs) {</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">            if (tileAt(f.getX(), f.getY()) != ' ') {</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">                if (tileAt(f.getX(), f.getY()) == 'B') {</span>
-<span class="nc" id="L362">                    int x = f.getX() - (f.getX()%20);</span>
-<span class="nc" id="L363">                    int y = f.getY() - (f.getY()%20);</span>
-<span class="nc" id="L364">                    destroy(x,y);</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        for (Fireball f : fireballs) {</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">            if (tileAt(f.getX(), f.getY()) != ' ') {</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">                if (tileAt(f.getX(), f.getY()) == 'B') {</span>
+<span class="nc" id="L363">                    int x = f.getX() - (f.getX()%20);</span>
+<span class="nc" id="L364">                    int y = f.getY() - (f.getY()%20);</span>
+<span class="nc" id="L365">                    destroy(x,y);</span>
                 // If bomb tile hit
-<span class="nc bnc" id="L366" title="All 2 branches missed.">                } else if (tileAt(f.getX(), f.getY()) == 'V') {</span>
-<span class="nc" id="L367">                    int x = f.getX() - (f.getX()%20);</span>
-<span class="nc" id="L368">                    int y = f.getY() - (f.getY()%20);</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">                } else if (tileAt(f.getX(), f.getY()) == 'V') {</span>
+<span class="nc" id="L368">                    int x = f.getX() - (f.getX()%20);</span>
+<span class="nc" id="L369">                    int y = f.getY() - (f.getY()%20);</span>
 
-<span class="nc" id="L370">                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
-<span class="nc" id="L371">                    tempString.setCharAt(x/20, ' ');</span>
-<span class="nc" id="L372">                    this.layout[y/20] = tempString.toString();</span>
+<span class="nc" id="L371">                    StringBuilder tempString = new StringBuilder(this.layout[y/20]);</span>
+<span class="nc" id="L372">                    tempString.setCharAt(x/20, ' ');</span>
+<span class="nc" id="L373">                    this.layout[y/20] = tempString.toString();</span>
                     
                     // Destroy all brick tiles around it
-<span class="nc bnc" id="L375" title="All 2 branches missed.">                    if (tileAt(x-20, y) == 'B') {</span>
-<span class="nc" id="L376">                        destroy(x-20,y);</span>
-<span class="nc bnc" id="L377" title="All 2 branches missed.">                    } if (tileAt(x-20, y-20) == 'B') {</span>
-<span class="nc" id="L378">                        destroy(x-20, y-20);</span>
-<span class="nc bnc" id="L379" title="All 2 branches missed.">                    } if (tileAt(x, y-20) == 'B') {</span>
-<span class="nc" id="L380">                        destroy(x, y-20);</span>
-<span class="nc bnc" id="L381" title="All 2 branches missed.">                    } if (tileAt(x+20, y-20) == 'B') {</span>
-<span class="nc" id="L382">                        destroy(x+20, y-20);</span>
-<span class="nc bnc" id="L383" title="All 2 branches missed.">                    } if (tileAt(x+20, y) == 'B') {</span>
-<span class="nc" id="L384">                        destroy(x+20, y);</span>
-<span class="nc bnc" id="L385" title="All 2 branches missed.">                    } if (tileAt(x+20, y+20) == 'B') {</span>
-<span class="nc" id="L386">                        destroy(x+20, y+20);</span>
-<span class="nc bnc" id="L387" title="All 2 branches missed.">                    } if (tileAt(x, y+20) == 'B') {</span>
-<span class="nc" id="L388">                        destroy(x, y+20);</span>
-<span class="nc bnc" id="L389" title="All 2 branches missed.">                    } if (tileAt(x-20, y+20) == 'B') {</span>
-<span class="nc" id="L390">                        destroy(x-20, y+20);</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">                    if (tileAt(x-20, y) == 'B') {</span>
+<span class="nc" id="L377">                        destroy(x-20,y);</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">                    } if (tileAt(x-20, y-20) == 'B') {</span>
+<span class="nc" id="L379">                        destroy(x-20, y-20);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">                    } if (tileAt(x, y-20) == 'B') {</span>
+<span class="nc" id="L381">                        destroy(x, y-20);</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">                    } if (tileAt(x+20, y-20) == 'B') {</span>
+<span class="nc" id="L383">                        destroy(x+20, y-20);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">                    } if (tileAt(x+20, y) == 'B') {</span>
+<span class="nc" id="L385">                        destroy(x+20, y);</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">                    } if (tileAt(x+20, y+20) == 'B') {</span>
+<span class="nc" id="L387">                        destroy(x+20, y+20);</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">                    } if (tileAt(x, y+20) == 'B') {</span>
+<span class="nc" id="L389">                        destroy(x, y+20);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">                    } if (tileAt(x-20, y+20) == 'B') {</span>
+<span class="nc" id="L391">                        destroy(x-20, y+20);</span>
                     }
 
                     // Destroy all objects around it
-<span class="nc bnc" id="L394" title="All 2 branches missed.">                    for (Slime s : slimes) {</span>
-<span class="nc bnc" id="L395" title="All 4 branches missed.">                        if ((grid(x)-1 &lt;= grid(s.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(s.getY())) &amp;&amp;</span>
-<span class="nc bnc" id="L396" title="All 4 branches missed.">                            (grid(x)+1 &gt;= grid(s.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(s.getY()))) {</span>
-<span class="nc" id="L397">                            toRemoveS.add(s);</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">                    for (Slime s : slimes) {</span>
+<span class="nc bnc" id="L396" title="All 4 branches missed.">                        if ((grid(x)-1 &lt;= grid(s.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(s.getY())) &amp;&amp;</span>
+<span class="nc bnc" id="L397" title="All 4 branches missed.">                            (grid(x)+1 &gt;= grid(s.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(s.getY()))) {</span>
+<span class="nc" id="L398">                            toRemoveS.add(s);</span>
                         }
-<span class="nc" id="L399">                    }</span>
-<span class="nc bnc" id="L400" title="All 2 branches missed.">                    for (Gremlin g : gremlins) {</span>
-<span class="nc bnc" id="L401" title="All 4 branches missed.">                        if ((grid(x)-1 &lt;= grid(g.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(g.getY())) &amp;&amp;</span>
-<span class="nc bnc" id="L402" title="All 4 branches missed.">                            (grid(x)+1 &gt;= grid(g.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(g.getY()))) {</span>
-<span class="nc" id="L403">                            g.respawn(this, player);</span>
+<span class="nc" id="L400">                    }</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">                    for (Gremlin g : gremlins) {</span>
+<span class="nc bnc" id="L402" title="All 4 branches missed.">                        if ((grid(x)-1 &lt;= grid(g.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(g.getY())) &amp;&amp;</span>
+<span class="nc bnc" id="L403" title="All 4 branches missed.">                            (grid(x)+1 &gt;= grid(g.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(g.getY()))) {</span>
+<span class="nc" id="L404">                            g.respawn(this, player);</span>
                         }
-<span class="nc" id="L405">                    }</span>
-<span class="nc bnc" id="L406" title="All 4 branches missed.">                    if ((grid(x)-1 &lt;= grid(player.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(player.getY())) &amp;&amp;</span>
-<span class="nc bnc" id="L407" title="All 4 branches missed.">                        (grid(x)+1 &gt;= grid(player.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(player.getY()))) {</span>
-<span class="nc" id="L408">                        this.lives -= 1;</span>
-<span class="nc" id="L409">                        this.tempLevel -= 1;</span>
+<span class="nc" id="L406">                    }</span>
+<span class="nc bnc" id="L407" title="All 4 branches missed.">                    if ((grid(x)-1 &lt;= grid(player.getX())) &amp;&amp; (grid(y)-1 &lt;= grid(player.getY())) &amp;&amp;</span>
+<span class="nc bnc" id="L408" title="All 4 branches missed.">                        (grid(x)+1 &gt;= grid(player.getX())) &amp;&amp; (grid(y)+1 &gt;= grid(player.getY()))) {</span>
+<span class="nc" id="L409">                        this.lives -= 1;</span>
+<span class="nc" id="L410">                        this.tempLevel -= 1;</span>
                     }
                 }
-<span class="nc" id="L412">                toRemoveF.add(f);</span>
+<span class="nc" id="L413">                toRemoveF.add(f);</span>
             }
             // Slimes
-<span class="nc bnc" id="L415" title="All 2 branches missed.">            for (Slime s : slimes) {</span>
-<span class="nc bnc" id="L416" title="All 4 branches missed.">                if ((grid(f.getX()) == grid(s.getX())) &amp;&amp; (grid(f.getY()) == grid(s.getY()))) {</span>
-<span class="nc bnc" id="L417" title="All 2 branches missed.">                    if (toRemoveF.contains(f) == false) {</span>
-<span class="nc" id="L418">                        toRemoveF.add(f);</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">            for (Slime s : slimes) {</span>
+<span class="nc bnc" id="L417" title="All 4 branches missed.">                if ((grid(f.getX()) == grid(s.getX())) &amp;&amp; (grid(f.getY()) == grid(s.getY()))) {</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">                    if (toRemoveF.contains(f) == false) {</span>
+<span class="nc" id="L419">                        toRemoveF.add(f);</span>
                     }
-<span class="nc" id="L420">                    toRemoveS.add(s);</span>
+<span class="nc" id="L421">                    toRemoveS.add(s);</span>
                 }
-<span class="nc" id="L422">            }</span>
+<span class="nc" id="L423">            }</span>
             // Gremlins
-<span class="nc bnc" id="L424" title="All 2 branches missed.">            for (Gremlin g : gremlins) {</span>
-<span class="nc bnc" id="L425" title="All 4 branches missed.">                if ((grid(f.getX()) == grid(g.getX())) &amp;&amp; (grid(f.getY()) == grid(g.getY()))) {</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">                    if (toRemoveF.contains(f) == false) {</span>
-<span class="nc" id="L427">                        toRemoveF.add(f);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">            for (Gremlin g : gremlins) {</span>
+<span class="nc bnc" id="L426" title="All 4 branches missed.">                if ((grid(f.getX()) == grid(g.getX())) &amp;&amp; (grid(f.getY()) == grid(g.getY()))) {</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">                    if (toRemoveF.contains(f) == false) {</span>
+<span class="nc" id="L428">                        toRemoveF.add(f);</span>
                     }
-<span class="nc" id="L429">                    g.respawn(this, player);</span>
+<span class="nc" id="L430">                    g.respawn(this, player);</span>
                 }
-<span class="nc" id="L431">            }</span>
+<span class="nc" id="L432">            }</span>
             
-<span class="nc" id="L433">        }</span>
+<span class="nc" id="L434">        }</span>
         // Remove objects from arrays and reset slime temparray for next lot
-<span class="nc" id="L435">        slimes.removeAll(toRemoveS);</span>
-<span class="nc" id="L436">        toRemoveS = new ArrayList&lt;Slime&gt;();</span>
-<span class="nc" id="L437">        fireballs.removeAll(toRemoveF);</span>
+<span class="nc" id="L436">        slimes.removeAll(toRemoveS);</span>
+<span class="nc" id="L437">        toRemoveS = new ArrayList&lt;Slime&gt;();</span>
+<span class="nc" id="L438">        fireballs.removeAll(toRemoveF);</span>
 
         // Slimes
-<span class="nc bnc" id="L440" title="All 2 branches missed.">        for (Slime s : slimes) {</span>
-<span class="nc bnc" id="L441" title="All 2 branches missed.">            if (tileAt(s.getX(), s.getY()) != ' ') {</span>
-<span class="nc" id="L442">                toRemoveS.add(s);</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">        for (Slime s : slimes) {</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">            if (tileAt(s.getX(), s.getY()) != ' ') {</span>
+<span class="nc" id="L443">                toRemoveS.add(s);</span>
             }
-<span class="nc bnc" id="L444" title="All 4 branches missed.">            if ((grid(player.getX()) == grid(s.getX())) &amp;&amp; (grid(player.getY()) == grid(s.getY()))) {</span>
-<span class="nc" id="L445">                this.lives -= 1;</span>
-<span class="nc" id="L446">                this.tempLevel -= 1;</span>
+<span class="nc bnc" id="L445" title="All 4 branches missed.">            if ((grid(player.getX()) == grid(s.getX())) &amp;&amp; (grid(player.getY()) == grid(s.getY()))) {</span>
+<span class="nc" id="L446">                this.lives -= 1;</span>
+<span class="nc" id="L447">                this.tempLevel -= 1;</span>
             }
-<span class="nc" id="L448">        }</span>
-<span class="nc" id="L449">        slimes.removeAll(toRemoveS);</span>
+<span class="nc" id="L449">        }</span>
+<span class="nc" id="L450">        slimes.removeAll(toRemoveS);</span>
 
         // Update after check if destroyed
-<span class="nc" id="L452">        List&lt;brickTile&gt; toRemoveB = new ArrayList&lt;brickTile&gt;();</span>
-<span class="nc bnc" id="L453" title="All 2 branches missed.">        for (brickTile b : broken) {</span>
-<span class="nc bnc" id="L454" title="All 2 branches missed.">            if (b.change(this) == false) {</span>
+<span class="nc" id="L453">        List&lt;brickTile&gt; toRemoveB = new ArrayList&lt;brickTile&gt;();</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">        for (brickTile b : broken) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">            if (b.change(this) == false) {</span>
 
-<span class="nc" id="L456">                StringBuilder tempString = new StringBuilder(this.layout[b.getY()/20]);</span>
-<span class="nc" id="L457">                tempString.setCharAt(b.getX()/20, ' ');</span>
-<span class="nc" id="L458">                this.layout[b.getY()/20] = tempString.toString();</span>
+<span class="nc" id="L457">                StringBuilder tempString = new StringBuilder(this.layout[b.getY()/20]);</span>
+<span class="nc" id="L458">                tempString.setCharAt(b.getX()/20, ' ');</span>
+<span class="nc" id="L459">                this.layout[b.getY()/20] = tempString.toString();</span>
                 
-<span class="nc" id="L460">                toRemoveB.add(b);</span>
+<span class="nc" id="L461">                toRemoveB.add(b);</span>
             }
-<span class="nc" id="L462">        }</span>
-<span class="nc" id="L463">        broken.removeAll(toRemoveB);</span>
-<span class="nc" id="L464">    }</span>
+<span class="nc" id="L463">        }</span>
+<span class="nc" id="L464">        broken.removeAll(toRemoveB);</span>
+<span class="nc" id="L465">    }</span>
 
     /**
      * Draw all elements in the game by current frame. 
      * @throws NullPointerException
 	 */
     public void draw() {
-<span class="nc" id="L471">        background(182, 146, 109);</span>
+<span class="fc" id="L472">        background(182, 146, 109);</span>
         // If level finished: Parse base of next level
         // If level not finished: Reparse objects from layourts and everything else have to get from lists and tiles
 
         // Errors raised
-<span class="nc bnc" id="L476" title="All 2 branches missed.">        if (this.error == 1) {</span>
-<span class="nc" id="L477">            this.text(&quot;Missing resource(s)&quot;, 300, 300);</span>
-<span class="nc bnc" id="L478" title="All 2 branches missed.">        } else if (this.error == 2) {</span>
-<span class="nc" id="L479">            this.text(&quot;Invalid level layout&quot;, 300, 300);</span>
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">        if (this.error == 1) {</span>
+<span class="nc" id="L478">            this.text(&quot;Missing resource(s)&quot;, 300, 300);</span>
+<span class="pc bpc" id="L479" title="1 of 2 branches missed.">        } else if (this.error == 2) {</span>
+<span class="nc" id="L480">            this.text(&quot;Invalid level layout&quot;, 300, 300);</span>
         // If no errors, do the rest
         } else {
             // No lives
-<span class="nc bnc" id="L483" title="All 2 branches missed.">            if (lives == 0) {</span>
-<span class="nc" id="L484">                this.text(&quot;Game over&quot;, 300, 300);</span>
-<span class="nc" id="L485">                this.text(&quot;Press any key to restart or press Esc to quit&quot;, 300, 350);</span>
+<span class="pc bpc" id="L484" title="1 of 2 branches missed.">            if (lives == 0) {</span>
+<span class="nc" id="L485">                this.text(&quot;Game over&quot;, 300, 300);</span>
+<span class="nc" id="L486">                this.text(&quot;Press any key to restart or press Esc to quit&quot;, 300, 350);</span>
             } else {
                 // Need exception in case other things don't work out and resources aren't available
                 try {
-<span class="nc bnc" id="L489" title="All 2 branches missed.">                    if (this.won == 1) {</span>
-<span class="nc" id="L490">                        this.text(&quot;You win&quot;, 300, 300);</span>
-<span class="nc" id="L491">                        this.text(&quot;Press any key to restart or press Esc to quit&quot;, 300, 350);</span>
-<span class="nc bnc" id="L492" title="All 2 branches missed.">                    } else if (level &lt; this.levels.size()) {</span>
+<span class="pc bpc" id="L490" title="1 of 2 branches missed.">                    if (this.won == 1) {</span>
+<span class="nc" id="L491">                        this.text(&quot;You win&quot;, 300, 300);</span>
+<span class="nc" id="L492">                        this.text(&quot;Press any key to restart or press Esc to quit&quot;, 300, 350);</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                    } else if (level &lt; this.levels.size()) {</span>
                         // Templevel = -1 ony for initial setup
-<span class="nc bnc" id="L494" title="All 2 branches missed.">                        if (tempLevel != -1) {</span>
-<span class="nc" id="L495">                            collisions();</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">                        if (tempLevel != -1) {</span>
+<span class="nc" id="L496">                            collisions();</span>
                         }
                         // Using templevel to know when to reset the map
-<span class="nc bnc" id="L498" title="All 2 branches missed.">                        if (this.tempLevel != level) {</span>
-<span class="nc" id="L499">                            resetMap();</span>
-<span class="nc" id="L500">                            this.tempLevel = this.tempLevel + 1;</span>
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">                        if (this.tempLevel != level) {</span>
+<span class="fc" id="L500">                            resetMap();</span>
+<span class="fc" id="L501">                            this.tempLevel = this.tempLevel + 1;</span>
                         }
 
                         // Draw objects from layout
-<span class="nc" id="L504">                        int y = 0;</span>
-<span class="nc bnc" id="L505" title="All 2 branches missed.">                        for (String eachString : this.layout) {</span>
-<span class="nc" id="L506">                            int x = 0;</span>
-<span class="nc bnc" id="L507" title="All 2 branches missed.">                            for (int i = 0; i &lt; eachString.length(); i++) {</span>
-<span class="nc bnc" id="L508" title="All 2 branches missed.">                                if (eachString.charAt(i) == 'X') {</span>
-<span class="nc" id="L509">                                    this.image(this.stonewall, x, y);</span>
-<span class="nc bnc" id="L510" title="All 2 branches missed.">                                } else if (eachString.charAt(i) == 'B') {</span>
-<span class="nc" id="L511">                                    this.image(this.brickwall, x, y);</span>
-<span class="nc bnc" id="L512" title="All 2 branches missed.">                                } else if (eachString.charAt(i) == 'V') {</span>
-<span class="nc" id="L513">                                    this.image(this.bomb, x, y);</span>
+<span class="fc" id="L505">                        int y = 0;</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">                        for (String eachString : this.layout) {</span>
+<span class="fc" id="L507">                            int x = 0;</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">                            for (int i = 0; i &lt; eachString.length(); i++) {</span>
+<span class="fc bfc" id="L509" title="All 2 branches covered.">                                if (eachString.charAt(i) == 'X') {</span>
+<span class="fc" id="L510">                                    this.image(this.stonewall, x, y);</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">                                } else if (eachString.charAt(i) == 'B') {</span>
+<span class="fc" id="L512">                                    this.image(this.brickwall, x, y);</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">                                } else if (eachString.charAt(i) == 'V') {</span>
+<span class="fc" id="L514">                                    this.image(this.bomb, x, y);</span>
                                 }
-<span class="nc" id="L515">                                x = x+20;</span>
+<span class="fc" id="L516">                                x = x+20;</span>
                             }
-<span class="nc" id="L517">                            y = y+20;</span>
+<span class="fc" id="L518">                            y = y+20;</span>
                         }
 
                         // Draw all other tiles
-<span class="nc bnc" id="L521" title="All 2 branches missed.">                        for (brickTile b : broken) {</span>
-<span class="nc" id="L522">                            b.draw(this);</span>
-<span class="nc" id="L523">                        }</span>
-<span class="nc" id="L524">                        exitTile.draw(this);</span>
-<span class="nc" id="L525">                        freezeTile.draw(this);</span>
+<span class="pc bpc" id="L522" title="1 of 2 branches missed.">                        for (brickTile b : broken) {</span>
+<span class="nc" id="L523">                            b.draw(this);</span>
+<span class="nc" id="L524">                        }</span>
+<span class="fc" id="L525">                        exitTile.draw(this);</span>
+<span class="fc" id="L526">                        freezeTile.draw(this);</span>
                         
                         // Draw all objects
-<span class="nc" id="L528">                        player.draw(this);</span>
-<span class="nc bnc" id="L529" title="All 2 branches missed.">                        if (player.shoot(this.fireballCooldown) == false) {</span>
-<span class="nc" id="L530">                            player.progressBar(this);</span>
+<span class="fc" id="L529">                        player.draw(this);</span>
+<span class="pc bpc" id="L530" title="1 of 2 branches missed.">                        if (player.shoot(this.fireballCooldown) == false) {</span>
+<span class="nc" id="L531">                            player.progressBar(this);</span>
                         }
-<span class="nc bnc" id="L532" title="All 2 branches missed.">                        for (Fireball f : fireballs) {</span>
-<span class="nc" id="L533">                            f.draw(this);</span>
-<span class="nc" id="L534">                        }</span>
-<span class="nc bnc" id="L535" title="All 2 branches missed.">                        for (Gremlin g : gremlins) {</span>
-<span class="nc" id="L536">                            g.draw(this);</span>
-<span class="nc" id="L537">                        }</span>
-<span class="nc bnc" id="L538" title="All 2 branches missed.">                        for (Slime s : slimes) {</span>
-<span class="nc" id="L539">                            s.draw(this);</span>
-<span class="nc" id="L540">                        }</span>
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">                        for (Fireball f : fireballs) {</span>
+<span class="nc" id="L534">                            f.draw(this);</span>
+<span class="nc" id="L535">                        }</span>
+<span class="fc bfc" id="L536" title="All 2 branches covered.">                        for (Gremlin g : gremlins) {</span>
+<span class="fc" id="L537">                            g.draw(this);</span>
+<span class="fc" id="L538">                        }</span>
+<span class="pc bnc" id="L539" title="All 2 branches missed.">                        for (Slime s : slimes) {</span>
+<span class="nc" id="L540">                            s.draw(this);</span>
+<span class="nc" id="L541">                        }</span>
 
                         // Draw extra info
-<span class="nc" id="L543">                        this.text(&quot;Lives: &quot;, 20, 690);</span>
-<span class="nc bnc" id="L544" title="All 2 branches missed.">                        for (int i = 0; i &lt; lives; i++) {</span>
-<span class="nc" id="L545">                            int x = (3+i)*20;</span>
-<span class="nc" id="L546">                            this.image(wizard2, x, 675);</span>
+<span class="nc" id="L544">                        this.text(&quot;Lives: &quot;, 20, 690);</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">                        for (int i = 0; i &lt; lives; i++) {</span>
+<span class="nc" id="L546">                            int x = (3+i)*20;</span>
+<span class="nc" id="L547">                            this.image(wizard2, x, 675);</span>
                         }
-<span class="nc" id="L548">                        this.text(&quot;Level &quot; + (level+1) + &quot;/&quot; + (this.levels.size()), 170, 690);</span>
-<span class="nc" id="L549">                        this.text(&quot;Esc: Quit, R: Respawn&quot;, 400, 690);</span>
+<span class="nc" id="L549">                        this.text(&quot;Level &quot; + (level+1) + &quot;/&quot; + (this.levels.size()), 170, 690);</span>
+<span class="nc" id="L550">                        this.text(&quot;Esc: Quit, R: Respawn&quot;, 400, 690);</span>
                     }
-<span class="nc" id="L551">                } catch (NullPointerException e) {</span>
-<span class="nc" id="L552">                    this.error = 1;</span>
-<span class="nc" id="L553">                }</span>
+<span class="nc" id="L552">                } catch (NullPointerException e) {</span>
+<span class="nc" id="L553">                    this.error = 1;</span>
+<span class="nc" id="L554">                }</span>
             }
         }
-<span class="nc" id="L556">    }</span>
+<span class="nc" id="L557">    }</span>
 
     public static void main(String[] args) {
-<span class="nc" id="L559">        PApplet.main(&quot;gremlins.App&quot;);</span>
-<span class="nc" id="L560">    }</span>
+<span class="fc" id="L560">        PApplet.main(&quot;gremlins.App&quot;);</span>
+<span class="fc" id="L561">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
